@@ -1,8 +1,8 @@
+import './sidebar.scss'
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
-import './sidebar.scss'
 import { AccountCircleOutlined, HealingOutlined, Logout, NotificationsNoneOutlined, QueryStats, Settings, SettingsAccessibility, SettingsApplications } from '@mui/icons-material';
 
 const Sidebar = () => {
