@@ -1,16 +1,40 @@
 import './datatable.scss'
 import { DataGrid } from '@mui/x-data-grid';
-import { userRows, userColumns } from '../../datatableSource';
+import { userColumns } from '../../datatableSource';
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { collection, getDocs, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import { db } from '../../firebase';
+
 
 
 const DataTable = () => {
 
-  const [data, setData] = useState(userRows)
+  const [data, setData] = useState([])
 
-  const handleDelete = (id) => {
-    setData(data.filter(item => item.id !== id))
+  useEffect(() => {
+
+    // Listen(REALTIME)
+    const unsub = onSnapshot(collection(db, "users"), (snapShot) => {
+      let list = [];
+      snapShot.docs.forEach(doc => list.push({ id: doc.id, ...doc.data() }))
+      setData(list)
+    }, (error) => {
+      console.log(error);
+    });
+
+    return () => {
+      unsub()
+    }
+  }, [])
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, "users", id));
+      setData(data.filter(item => item.id === id))
+    } catch (error) {
+
+    }
   }
 
 
@@ -28,6 +52,7 @@ const DataTable = () => {
       }
     }
   ]
+
   return (
     <div className='datatable'>
       <div className="datatableTitle">

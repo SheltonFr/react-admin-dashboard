@@ -7,6 +7,7 @@ import { addDoc, doc, setDoc, collection, serverTimestamp } from 'firebase/fires
 import { db, auth, storage } from '../../firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { useNavigate } from 'react-router-dom'
 
 
 const New = ({ inputs, title }) => {
@@ -14,6 +15,7 @@ const New = ({ inputs, title }) => {
   const [file, setFile] = useState("")
   const [data, setData] = useState({})
   const [per, setPer] = useState(null)
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -57,7 +59,7 @@ const New = ({ inputs, title }) => {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setData((prev) => ({...prev, img:downloadURL}))
+            setData((prev) => ({ ...prev, img: downloadURL }))
           });
         }
       );
@@ -87,6 +89,7 @@ const New = ({ inputs, title }) => {
         ...data,
         timeStamp: serverTimestamp(),
       });
+      navigate()
     } catch (err) {
       console.error(err);
     }

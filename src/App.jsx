@@ -60,7 +60,10 @@ function App() {
             </Route>
 
             <Route path='products'>
-              <Route index element={<List />} />
+              <Route
+                index
+                element={<List />}
+              />
               <Route
                 path=':productId'
                 element={
